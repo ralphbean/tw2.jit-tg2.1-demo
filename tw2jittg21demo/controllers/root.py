@@ -11,6 +11,8 @@ from tw2jittg21demo.controllers.error import ErrorController
 from tw2jittg21demo import model
 from tw2jittg21demo.controllers.secure import SecureController
 
+import tw2.jit
+
 __all__ = ['RootController']
 
 
@@ -32,10 +34,28 @@ class RootController(BaseController):
 
     error = ErrorController()
 
+    def getWidget(self):
+        """ Produce the configured instance of tw2.jit.SQLARadialGraph """
+        class UserGraph(tw2.jit.SQLARadialGraph):
+            id = 'whatever'
+            base_url = '/jit_data'
+            entities = [model.User, model.Group, model.Permission]
+            excluded_columns = ['_password', 'password',
+                                'user_id', 'group_id', 'permission_id']
+            width = '980'
+            height = '980'
+            rootObject = model.User.query.first()
+        return UserGraph
+
     @expose('tw2jittg21demo.templates.index')
     def index(self):
         """Handle the front-page."""
-        return dict(page='index')
+        return dict(page='index', widget=self.getWidget())
+
+    @expose('json')
+    def jit_data(self, *args, **kw):
+        """ Serve data from the tw2.jit built-in controller """
+        return self.getWidget().request(request).body
 
     @expose('tw2jittg21demo.templates.about')
     def about(self):
