@@ -1,0 +1,4 @@
+recursive-include tw2jittg21demo/public *
+include tw2jittg21demo/public/favicon.ico
+recursive-include tw2jittg21demo/i18n *
+recursive-include tw2jittg21demo/templates *
