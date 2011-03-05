@@ -126,6 +126,27 @@ class User(DeclarativeBase):
     def __unicode__(self):
         return self.display_name or self.user_name
 
+    @property
+    def gravatar_url(self):
+        """ Return a link to the gravatar image for this email addy """
+        import hashlib
+        hsh = hashlib.md5(self.email_address).hexdigest()
+        base = "http://www.gravatar.com/avatar/{hsh}?d=monsterid"
+        return base.format(hsh=hsh)
+
+    def __jit_data__(self):
+        """ 'hover_html' is the only supported key at present """
+        return {
+            'hover_html' : """
+            <h2>{display_name}</h2>
+            <img src="{gravatar_url}" />
+            <ul>
+                <li>{user_name}</li>
+                <li>{created}</li>
+            </ul>
+            """.format(gravatar_url=self.gravatar_url, **self.__dict__)
+        }
+
     #{ Getters and setters
 
     @property
