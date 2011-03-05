@@ -18,9 +18,11 @@ setup(
         "Babel >=0.9.4",
         "zope.sqlalchemy >= 0.4 ",
         "repoze.tm2 >= 1.0a4",
-        
         "repoze.what-quickstart >= 1.0",
         "tgext.admin>=0.3.3",
+        "repoze.what-pylons",
+        "tg.devtools",
+        "tw2.jit",
                 ],
     setup_requires=["PasteScript >= 1.7"],
     paster_plugins=['PasteScript', 'Pylons', 'TurboGears2', 'tg.devtools'],
