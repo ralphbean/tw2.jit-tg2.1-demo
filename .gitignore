@@ -4,3 +4,4 @@ ez_setup
 virtualenv
 devdata.db
 data
+*.swp
