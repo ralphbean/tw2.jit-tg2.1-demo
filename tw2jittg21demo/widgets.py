@@ -9,8 +9,8 @@ def makeUserGraph():
         entities = [model.User, model.Group, model.Permission]
         excluded_columns = ['_password', 'password',
                             'user_id', 'group_id', 'permission_id']
-        width = '980'
-        height = '980'
+        width = '920'
+        height = '525'
         rootObject = model.User.query.first()
     
     return UserGraph
